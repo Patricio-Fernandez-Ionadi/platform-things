@@ -1,0 +1,240 @@
+{
+	"anims": [
+		{
+			"key": "walk",
+			"type": "frames",
+			"repeat": -1,
+			"frameRate": 6,
+			"frames": [
+				{
+					"key": "shaddy",
+					"frame": "walk-1"
+				},
+				{
+					"key": "shaddy",
+					"frame": "walk-2"
+				},
+				{
+					"key": "shaddy",
+					"frame": "walk-3"
+				},
+				{
+					"key": "shaddy",
+					"frame": "walk-4"
+				}
+			]
+		},
+		{
+			"key": "idle",
+			"type": "frames",
+			"repeat": -1,
+			"frameRate": 6,
+			"frames": [
+				{
+					"key": "shaddy",
+					"frame": "idle-1"
+				},
+				{
+					"key": "shaddy",
+					"frame": "idle-2"
+				},
+				{
+					"key": "shaddy",
+					"frame": "idle-3"
+				},
+				{
+					"key": "shaddy",
+					"frame": "idle-4"
+				}
+			]
+		},
+		{
+			"key": "atk3",
+			"type": "frames",
+			"repeat": 0,
+			"frameRate": 8,
+			"frames": [
+				{
+					"key": "shaddy",
+					"frame": "attack-c1"
+				},
+				{
+					"key": "shaddy",
+					"frame": "attack-c2"
+				},
+				{
+					"key": "shaddy",
+					"frame": "attack-c3"
+				},
+				{
+					"key": "shaddy",
+					"frame": "attack-c4"
+				},
+				{
+					"key": "shaddy",
+					"frame": "attack-c5"
+				},
+				{
+					"key": "shaddy",
+					"frame": "attack-c6"
+				},
+				{
+					"key": "shaddy",
+					"frame": "attack-c7"
+				},
+				{
+					"key": "shaddy",
+					"frame": "attack-c8"
+				}
+			]
+		},
+		{
+			"key": "atk2",
+			"type": "frames",
+			"repeat": 0,
+			"frameRate": 12,
+			"frames": [
+				{
+					"key": "shaddy",
+					"frame": "attack-b1"
+				},
+				{
+					"key": "shaddy",
+					"frame": "attack-b2"
+				},
+				{
+					"key": "shaddy",
+					"frame": "attack-b3"
+				},
+				{
+					"key": "shaddy",
+					"frame": "attack-b4"
+				},
+				{
+					"key": "shaddy",
+					"frame": "attack-b5"
+				},
+				{
+					"key": "shaddy",
+					"frame": "attack-b6"
+				},
+				{
+					"key": "shaddy",
+					"frame": "attack-b7"
+				},
+				{
+					"key": "shaddy",
+					"frame": "attack-b8"
+				},
+				{
+					"key": "shaddy",
+					"frame": "attack-b9"
+				},
+				{
+					"key": "shaddy",
+					"frame": "attack-b10"
+				},
+				{
+					"key": "shaddy",
+					"frame": "attack-b11"
+				}
+			]
+		},
+		{
+			"key": "atk1",
+			"type": "frames",
+			"repeat": 0,
+			"frameRate": 18,
+			"frames": [
+				{
+					"key": "shaddy",
+					"frame": "attack-a1"
+				},
+				{
+					"key": "shaddy",
+					"frame": "attack-a2"
+				},
+				{
+					"key": "shaddy",
+					"frame": "attack-a3"
+				},
+				{
+					"key": "shaddy",
+					"frame": "attack-a4"
+				},
+				{
+					"key": "shaddy",
+					"frame": "attack-a5"
+				},
+				{
+					"key": "shaddy",
+					"frame": "attack-a6"
+				},
+				{
+					"key": "shaddy",
+					"frame": "attack-a7"
+				},
+				{
+					"key": "shaddy",
+					"frame": "attack-a8"
+				},
+				{
+					"key": "shaddy",
+					"frame": "attack-a9"
+				},
+				{
+					"key": "shaddy",
+					"frame": "attack-a10"
+				}
+			]
+		},
+		{
+			"key": "gethit",
+			"type": "frames",
+			"repeat": 0,
+			"frameRate": 12,
+			"frames": [
+				{
+					"key": "shaddy",
+					"frame": "hit-1"
+				},
+				{
+					"key": "shaddy",
+					"frame": "hit-2"
+				},
+				{
+					"key": "shaddy",
+					"frame": "hit-3"
+				}
+			]
+		},
+		{
+			"key": "dead",
+			"type": "frames",
+			"repeat": 0,
+			"frameRate": 12,
+			"frames": [
+				{
+					"key": "shaddy",
+					"frame": "dead-1"
+				},
+				{
+					"key": "shaddy",
+					"frame": "dead-2"
+				},
+				{
+					"key": "shaddy",
+					"frame": "dead-3"
+				},
+				{
+					"key": "shaddy",
+					"frame": "dead-4"
+				},
+				{
+					"key": "shaddy",
+					"frame": "dead-5"
+				}
+			]
+		}
+	]
+}
