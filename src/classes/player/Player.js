@@ -51,12 +51,12 @@ export class Player {
 			HANG_RELEASE_LEFT: '15',
 			WEAPON_STAND_RIGHT: new WeaponStandRight(this),
 			WEAPON_STAND_LEFT: new WeaponStandLeft(this),
-			ATTACK_1_RIGHT: new Attack1Right(this),
-			ATTACK_1_LEFT: new Attack1Left(this),
-			ATTACK_2_RIGHT: new Attack2Right(this),
-			ATTACK_2_LEFT: new Attack2Left(this),
-			ATTACK_3_RIGHT: new Attack3Right(this),
-			ATTACK_3_LEFT: new Attack3Left(this),
+			cutUp_RIGHT: new Attack1Right(this),
+			cutUp_LEFT: new Attack1Left(this),
+			cutDown_RIGHT: new Attack2Right(this),
+			cutDown_LEFT: new Attack2Left(this),
+			swift_RIGHT: new Attack3Right(this),
+			swift_LEFT: new Attack3Left(this),
 			HURT_RIGHT: new HurtRight(this),
 			HURT_LEFT: new HurtLeft(this),
 			FAINT_RIGHT: '26',
@@ -82,19 +82,19 @@ export class Player {
 		this.speed = this.scale * 100
 		this.jumpBoost = 650
 		this.abilities = {
-			atk1: {
+			cutUp: {
 				cd: 3,
 				range: 70,
 				duration: 500,
 				onCoolDown: false,
 			},
-			atk2: {
+			cutDown: {
 				cd: 0.5,
 				range: 70,
 				duration: 250,
 				onCoolDown: false,
 			},
-			atk3: {
+			swift: {
 				cd: 10,
 				range: 70,
 				duration: 680,
@@ -104,6 +104,7 @@ export class Player {
 		this.health = 100
 		this.facing = false
 		this.holdingWeapon = false
+		this.attacking = false
 	}
 	create() {
 		// Animations
@@ -138,8 +139,6 @@ export class Player {
 		}
 
 		if (this.currentState.enter) this.currentState.enter()
-
-		this.#handleCooldowns(state)
 	}
 
 	/* ------------------------------------------------------ */
@@ -166,39 +165,29 @@ export class Player {
 			yoyo: true,
 		})
 	}
-
-	playAnimation(state) {
-		this.player.play(state, true)
-	}
 	toggleWeapon() {
 		this.holdingWeapon = !this.holdingWeapon
 		return this.holdingWeapon
 	}
+	attack(key) {
+		this.attacking = true
+		setTimeout(() => (this.attacking = false), this.abilities[key].duration)
+
+		this.handleCooldowns(key)
+	}
+
+	playAnimation(state) {
+		this.player.play(state, true)
+	}
 
 	/* ------------------------------------------------------ */
 
-	#handleCooldowns(state) {
-		if (state === 'ATTACK_1') {
-			this.abilities.atk1.onCoolDown = true
-			setTimeout(
-				() => (this.abilities.atk1.onCoolDown = false),
-				this.abilities.atk1.cd * 1000
-			)
-		}
-		if (state === 'ATTACK_2') {
-			this.abilities.atk2.onCoolDown = true
-			setTimeout(
-				() => (this.abilities.atk2.onCoolDown = false),
-				this.abilities.atk2.cd * 1000
-			)
-		}
-		if (state === 'ATTACK_3') {
-			this.abilities.atk3.onCoolDown = true
-			setTimeout(
-				() => (this.abilities.atk3.onCoolDown = false),
-				this.abilities.atk3.cd * 1000
-			)
-		}
+	handleCooldowns(state) {
+		this.abilities[state].onCoolDown = true
+		setTimeout(
+			() => (this.abilities[state].onCoolDown = false),
+			this.abilities[state].cd * 1000
+		)
 	}
 	#createAnimations() {
 		const stand = {
@@ -273,24 +262,24 @@ export class Player {
 			frameRate: 8,
 			repeat: -1,
 		}
-		const attack_1 = {
-			key: 'ATTACK_1',
+		const cutUp = {
+			key: 'cutUp',
 			frames: this.scene.anims.generateFrameNumbers('player', {
 				frames: [42, 43, 44, 45, 46, 47],
 			}),
 			frameRate: 12,
 			repeat: 0,
 		}
-		const attack_2 = {
-			key: 'ATTACK_2',
+		const cutDown = {
+			key: 'cutDown',
 			frames: this.scene.anims.generateFrameNumbers('player', {
 				frames: [49, 50, 51],
 			}),
 			frameRate: 12,
 			repeat: 0,
 		}
-		const attack_3 = {
-			key: 'ATTACK_3',
+		const swift = {
+			key: 'swift',
 			frames: this.scene.anims.generateFrameNumbers('player', {
 				frames: [52, 53, 54, 55, 56, 57, 58],
 			}),
@@ -379,9 +368,9 @@ export class Player {
 		this.scene.anims.create(hang)
 		this.scene.anims.create(hang_release)
 		this.scene.anims.create(weapon_stand)
-		this.scene.anims.create(attack_1)
-		this.scene.anims.create(attack_2)
-		this.scene.anims.create(attack_3)
+		this.scene.anims.create(cutUp)
+		this.scene.anims.create(cutDown)
+		this.scene.anims.create(swift)
 		this.scene.anims.create(hurt)
 		this.scene.anims.create(faint)
 		this.scene.anims.create(weapon_draw)
