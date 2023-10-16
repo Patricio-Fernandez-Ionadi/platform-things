@@ -5,6 +5,7 @@
 - Horizontal movement: keyboard arrows ← →
 - Jump: keyboard arrow ↑
 - Duck: ↓
+- Draw/Shealth weapon: shift
 - Attacks:
   - Slice:
     - direction + arrow down
