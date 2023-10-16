@@ -2,23 +2,19 @@ export class Entity {
 	constructor(scene, configuration) {
 		this.scene = scene
 
-		this.states = {
-			idle: '',
-			stand: '',
-			walk: '',
-			run: '',
-			jump: '',
-			attack: '',
-			faint: '',
-			hurt: '',
-		}
-		this.currentState = null
-		this.abilities = {}
-
 		this.scale = configuration?.scale ? configuration.scale : 1
 		this.health = configuration?.health ? configuration.health : 100
-		this.facing =
-			configuration?.facing !== undefined ? configuration.facing : false
+
+		if (configuration?.facing !== undefined) {
+			if (configuration.facing === 'left' || configuration.facing === true) {
+				this.facing = true
+			} else if (
+				configuration.facing === 'right' ||
+				configuration.facing === false
+			) {
+				this.facing = false
+			}
+		} else this.facing = false
 
 		this.attacking = false
 	}
