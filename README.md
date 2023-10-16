@@ -6,7 +6,8 @@
 - Jump: keyboard arrow ↑
 - Duck: ↓
 - Attacks:
-  - Slice: direction ( ← → ) + arrow ↓
+  - ### Slice:
+    direction ( ← → ) + arrow ↓
   - Jump roll: direction ( ← → ) + jump + spacebar
   - Swipe blade Up: Q
   - Swipe blade Down: W
