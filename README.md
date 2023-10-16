@@ -6,13 +6,13 @@
 - Jump: keyboard arrow ↑
 - Duck: ↓
 - Draw/Shealth weapon: shift
+- Slice:
+  - direction + arrow down
+  - ← | → + ↓
+- Jump roll:
+  - direction + jump + spacebar
+  - ← | → + ↑ + space
 - Attacks:
-  - Slice:
-    - direction + arrow down
-    - ← | → + ↓
-  - Jump roll:
-    - direction + jump + spacebar
-    - ← | → + ↑ + space
   - Swipe blade Up: Q
   - Swipe blade Down: W
   - Swift: E
