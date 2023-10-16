@@ -1,11 +1,12 @@
 import { Bootload } from './src/bootload'
 import { Game, AUTO } from 'phaser'
 import './style.css'
+import { v, title } from './src/utils'
 
 const config = {
 	type: AUTO,
-	// title: 'Jump Blocks',				// default ''
-	// version: '0.1b',						// default ''
+	title, // default ''
+	version: v, // default ''
 	fps: 50, // default 60
 	render: {
 		transparent: false, // default

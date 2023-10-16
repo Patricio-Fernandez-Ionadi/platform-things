@@ -15,10 +15,10 @@ export class Shaddy extends Entity {
 				key: 'walk',
 			},
 			hurt: {
-				key: 'hurt',
+				key: 'shad_hurt',
 			},
 			faint: {
-				key: 'faint',
+				key: 'shad_faint',
 			},
 			grab: {
 				key: 'atk1',

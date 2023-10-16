@@ -189,7 +189,7 @@
 			]
 		},
 		{
-			"key": "hurt",
+			"key": "shad_hurt",
 			"type": "frames",
 			"repeat": 0,
 			"frameRate": 12,
@@ -209,7 +209,7 @@
 			]
 		},
 		{
-			"key": "faint",
+			"key": "shad_faint",
 			"type": "frames",
 			"repeat": 0,
 			"frameRate": 12,
