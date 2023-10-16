@@ -7,11 +7,11 @@
 - Duck: ↓
 - Attacks:
   - Slice:
-    direction + arrow down
-    ← | → + ↓
+    - direction + arrow down
+    - ← | → + ↓
   - Jump roll:
-    direction + jump + spacebar
-    ← | → + ↑ + space
+    - direction + jump + spacebar
+    - ← | → + ↑ + space
   - Swipe blade Up: Q
   - Swipe blade Down: W
   - Swift: E
