@@ -27,8 +27,8 @@ export class Overworld extends Scene {
 	info(e, prop) {
 		return this[e][prop]
 			? this[e][prop]
-			: this[e][e][prop]
-			? this[e][e][prop]
+			: this[e].sprite[prop]
+			? this[e].sprite[prop]
 			: undefined
 	}
 

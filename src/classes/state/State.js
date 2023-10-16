@@ -8,7 +8,6 @@ class State {
 	}
 	flipAnim(key) {
 		this.e.facing = !this.e.facing
-		this.e.player.setFlipX(this.e.facing)
 		if (!key) {
 			this.e.setState(this.state)
 		} else {

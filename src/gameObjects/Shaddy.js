@@ -1,6 +1,12 @@
-export class Shaddy {
+import { Entity } from '../classes'
+
+const shaddyConfig = {
+	facing: true,
+}
+
+export class Shaddy extends Entity {
 	constructor(scene) {
-		this.scene = scene
+		super(scene, shaddyConfig)
 		this.states = {
 			idle: {
 				key: 'idle',
@@ -24,7 +30,7 @@ export class Shaddy {
 				key: 'atk3',
 			},
 		}
-		this.state = this.states.idle.key
+		this.currentState = this.states.idle.key
 
 		this.abilities = {
 			grab: {
@@ -61,18 +67,16 @@ export class Shaddy {
 		this.speed = 30
 
 		this.active = false
-		this.attacking = false
-		this.facing = true
 	}
 	create() {
-		this.shaddy = this.scene.physics.add.sprite(550, 300, 'shaddy')
-		this.shaddy.setScale(3)
-		this.shaddy.setCollideWorldBounds(true)
+		this.addSprite(550, 300, 'shaddy')
+		this.sprite.setScale(3)
+		this.sprite.setCollideWorldBounds(true)
 		this.scene.anims.fromJSON(this.scene.cache.json.get('shadAnim'))
-		this.x = this.shaddy.x
+		this.x = this.sprite.x
 	}
 	update(time, delta) {
-		this.shaddy.anims.play(this.state, true)
+		this.sprite.anims.play(this.currentState, true)
 
 		this.updateObjectValues()
 		this.checkPlayerInRange()
@@ -80,14 +84,14 @@ export class Shaddy {
 		if (this.active) this.track()
 	}
 	updateObjectValues() {
-		this.x = this.shaddy.x
+		this.x = this.sprite.x
 		this.playerx = this.scene.info('player', 'x')
 		this.distanceToPlayer = this.scene.distanceBetween('shaddy', 'player')
-		this.facing ? this.shaddy.setFlipX(true) : this.shaddy.setFlipX(false)
+		this.facing ? this.sprite.setFlipX(true) : this.sprite.setFlipX(false)
 	}
 	setState(state) {
-		this.state = this.states[state].key || this.states.idle.key
-		this.shaddy.anims.play(this.state, true)
+		this.currentState = this.states[state].key || this.states.idle.key
+		this.sprite.anims.play(this.currentState, true)
 	}
 
 	/* ------------------------------------------------------ */
@@ -95,11 +99,11 @@ export class Shaddy {
 	track() {
 		if (this.playerx < this.x - 110) {
 			this.facing = false
-			this.shaddy.setVelocityX(-this.speed)
+			this.sprite.setVelocityX(-this.speed)
 			this.setState('walk')
 		}
 		if (this.playerx > this.x + 110) {
-			this.shaddy.setVelocityX(this.speed)
+			this.sprite.setVelocityX(this.speed)
 			this.facing = true
 			this.setState('walk')
 		}
@@ -110,7 +114,7 @@ export class Shaddy {
 			this.handleCooldown('grab')
 			this.active = false
 			this.attacking = true
-			this.shaddy.setVelocityX(0)
+			this.sprite.setVelocityX(0)
 
 			const effect = () => {
 				if (this.facing) {
@@ -143,7 +147,7 @@ export class Shaddy {
 			this.handleCooldown('explode')
 			this.active = false
 			this.attacking = true
-			this.shaddy.setVelocityX(0)
+			this.sprite.setVelocityX(0)
 
 			setTimeout(() => {
 				this.attacking = false
@@ -164,16 +168,6 @@ export class Shaddy {
 		if (this.#availableAttack(this.abilities.grab)) this.grab()
 
 		if (this.#availableAttack(this.abilities.explode)) this.explode()
-	}
-	handleCooldown(ability) {
-		const ab = this.abilities[ability]
-		const cd = ab.cd
-		const cdSecs = cd * 1000
-
-		ab.ready = false
-		setTimeout(() => {
-			ab.ready = true
-		}, cdSecs)
 	}
 
 	/* ------------------------------------------------------ */

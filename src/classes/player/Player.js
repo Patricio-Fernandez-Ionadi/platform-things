@@ -1,3 +1,4 @@
+import { Entity } from '../index.js'
 import {
 	FallLeft,
 	FallRight,
@@ -29,9 +30,13 @@ import {
 	HurtLeft,
 } from './states.js'
 
-export class Player {
+const playerConfig = {
+	facing: false,
+	scale: 4,
+}
+export class Player extends Entity {
 	constructor(scene) {
-		this.scene = scene
+		super(scene, playerConfig)
 		this.statesList = {
 			STAND_RIGHT: new StandRight(this),
 			STAND_LEFT: new StandLeft(this),
@@ -78,7 +83,6 @@ export class Player {
 		}
 		this.currentState = this.statesList['HURT_RIGHT']
 
-		this.scale = 4
 		this.speed = this.scale * 100
 		this.jumpBoost = 650
 		this.abilities = {
@@ -86,34 +90,31 @@ export class Player {
 				cd: 3,
 				range: 70,
 				duration: 500,
-				onCoolDown: false,
+				ready: true,
 			},
 			cutDown: {
 				cd: 0.5,
 				range: 70,
 				duration: 250,
-				onCoolDown: false,
+				ready: true,
 			},
 			swift: {
 				cd: 10,
 				range: 70,
 				duration: 680,
-				onCoolDown: false,
+				ready: true,
 			},
 		}
-		this.health = 100
-		this.facing = false
 		this.holdingWeapon = false
-		this.attacking = false
 	}
 	create() {
 		// Animations
 		this.#createAnimations()
 
 		// physic player
-		this.player = this.scene.physics.add.sprite(200, 500, 'player')
-		this.player.setScale(this.scale)
-		this.player.setCollideWorldBounds(true)
+		this.addSprite(200, 500, 'player')
+		this.sprite.setScale(this.scale)
+		this.sprite.setCollideWorldBounds(true)
 	}
 	update() {
 		this.updateObjectValues()
@@ -121,11 +122,11 @@ export class Player {
 		this.currentState.animate()
 	}
 	updateObjectValues() {
-		this.onFloor = this.player.body.velocity.y === 0
-		this.isJumping = this.player.body.velocity.y < 0
-		this.vx = this.player.body.velocity.x
-		this.vy = this.player.body.velocity.y
-		this.flipX = this.facing
+		this.onFloor = this.sprite.body.velocity.y === 0
+		this.isJumping = this.sprite.body.velocity.y < 0
+		this.vx = this.sprite.body.velocity.x
+		this.vy = this.sprite.body.velocity.y
+		this.setFacing()
 	}
 	setState(state) {
 		if (this.facing) {
@@ -140,10 +141,10 @@ export class Player {
 	/* ------------------------------------------------------ */
 
 	jump() {
-		if (this.onFloor) this.player.setVelocityY(-this.jumpBoost)
+		if (this.onFloor) this.sprite.setVelocityY(-this.jumpBoost)
 	}
 	translate(value) {
-		this.player.x += value
+		this.sprite.x += value
 	}
 	slowPlayer(value) {
 		if (this.vx > 0) this.vx -= value
@@ -154,7 +155,7 @@ export class Player {
 		this.setState('HURT')
 
 		this.scene.tweens.add({
-			targets: this.player,
+			targets: this.sprite,
 			duration: 50,
 			repeat: 3,
 			alpha: 0.5,
@@ -169,22 +170,18 @@ export class Player {
 		this.attacking = true
 		setTimeout(() => (this.attacking = false), this.abilities[key].duration)
 
-		this.handleCooldowns(key)
+		this.handleCooldown(key)
 	}
 
+	setFacing() {
+		this.sprite.setFlipX(this.facing)
+	}
 	playAnimation(state) {
-		this.player.play(state, true)
+		this.sprite.play(state, true)
 	}
 
 	/* ------------------------------------------------------ */
 
-	handleCooldowns(state) {
-		this.abilities[state].onCoolDown = true
-		setTimeout(
-			() => (this.abilities[state].onCoolDown = false),
-			this.abilities[state].cd * 1000
-		)
-	}
 	#createAnimations() {
 		const stand = {
 			key: 'STAND',
