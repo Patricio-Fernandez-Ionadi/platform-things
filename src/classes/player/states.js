@@ -1,4 +1,4 @@
-import { Right, Left } from '../State.js'
+import { Right, Left } from '../state/State.js'
 
 // ---------------
 export class StandRight extends Right {

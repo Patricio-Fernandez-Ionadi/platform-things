@@ -114,10 +114,6 @@ export class Player {
 		this.player = this.scene.physics.add.sprite(200, 500, 'player')
 		this.player.setScale(this.scale)
 		this.player.setCollideWorldBounds(true)
-
-		// this.player.setTint(0xff3333)
-		// this.player.setAlpha(0.8)
-		console.log('player created')
 	}
 	update() {
 		this.updateObjectValues()
@@ -153,7 +149,7 @@ export class Player {
 		if (this.vx > 0) this.vx -= value
 		if (this.vx < 0) this.vx += value
 	}
-	getHurt(atkdmg) {
+	takeDamage(atkdmg) {
 		this.health -= atkdmg
 		this.setState('HURT')
 

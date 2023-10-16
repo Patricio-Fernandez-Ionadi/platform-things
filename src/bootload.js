@@ -7,6 +7,7 @@ export class Bootload extends Scene {
 	}
 
 	preload() {
+		console.info('loading...')
 		this.load.path = 'src/assets/'
 
 		// PLAYER
@@ -26,7 +27,7 @@ export class Bootload extends Scene {
 	}
 
 	create() {
-		console.log('resources loaded.')
+		console.info('resources loaded.')
 		this.scene.add('Overworld', new Overworld()) // <- scene creation
 		this.scene.start('Overworld') // <- play scene
 	}

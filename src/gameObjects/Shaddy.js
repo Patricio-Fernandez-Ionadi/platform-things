@@ -72,7 +72,6 @@ export class Shaddy {
 		this.scene.anims.fromJSON(this.shaddyAnimations)
 		this.x = this.shaddy.x
 		this.facing = true
-		console.log('shaddy created')
 	}
 	update(time, delta) {
 		this.shaddy.anims.play(this.state, true)
@@ -84,8 +83,7 @@ export class Shaddy {
 	}
 	updateObjectValues() {
 		this.x = this.shaddy.x
-		this.playerToRight = this.scene.info('player', 'x') > this.x + 30
-		this.playerToLeft = this.scene.info('player', 'x') < this.x - 30
+		this.playerx = this.scene.info('player', 'x')
 		this.distanceToPlayer = this.scene.distanceBetween('shaddy', 'player')
 		this.facing ? this.shaddy.setFlipX(true) : this.shaddy.setFlipX(false)
 	}
@@ -97,15 +95,15 @@ export class Shaddy {
 	/* ------------------------------------------------------ */
 
 	track() {
-		this.setState('walk')
-
-		if (this.playerToLeft) {
+		if (this.playerx < this.x - 110) {
 			this.facing = false
 			this.shaddy.setVelocityX(-this.speed)
+			this.setState('walk')
 		}
-		if (this.playerToRight) {
+		if (this.playerx > this.x + 110) {
 			this.shaddy.setVelocityX(this.speed)
 			this.facing = true
+			this.setState('walk')
 		}
 	}
 	grab() {

@@ -8,7 +8,7 @@ export class Overworld extends Scene {
 	}
 
 	create() {
-		console.log('overworld created.')
+		console.info('game created.')
 		this.cursors = this.input.keyboard.createCursorKeys()
 		this.#createCustomKeyboardInputs()
 
@@ -29,7 +29,7 @@ export class Overworld extends Scene {
 			? this[e][prop]
 			: this[e][e][prop]
 			? this[e][e][prop]
-			: false
+			: undefined
 	}
 
 	distanceBetween(e1, e2) {
@@ -40,13 +40,14 @@ export class Overworld extends Scene {
 		this.cursors.Q = this.input.keyboard.addKey(Input.Keyboard.KeyCodes.Q)
 		this.cursors.W = this.input.keyboard.addKey(Input.Keyboard.KeyCodes.W)
 		this.cursors.E = this.input.keyboard.addKey(Input.Keyboard.KeyCodes.E)
+		this.cursors.TAB = this.input.keyboard.addKey(Input.Keyboard.KeyCodes.TAB)
 	}
 
 	attackEvent(em, atk, rec, cb) {
 		const emmiter = this[em]
 		const receptor = this[rec]
 
-		if (atk.dmg > 0) receptor.getHurt(atk.dmg)
+		if (atk.dmg > 0) receptor.takeDamage(atk.dmg)
 		return cb && cb()
 	}
 }
