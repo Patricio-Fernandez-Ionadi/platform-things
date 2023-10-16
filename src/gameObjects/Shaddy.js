@@ -30,10 +30,9 @@ export class Shaddy {
 			grab: {
 				cd: 8,
 				description:
-					'If player is 110 or less units in range, it will grab and move him closer about the 50% of the distance between both of them.',
+					'If player is 180 or less units in range, it will grab and move him closer about the 50% of the distance between both of them.',
 				dmg: 0,
 				duration: 500,
-				key: 'atk1',
 				name: 'grab',
 				range: {
 					max: 180,
@@ -47,10 +46,10 @@ export class Shaddy {
 			},
 			explode: {
 				cd: 4,
-				description: '',
+				description:
+					'Creates a rapid explosion creating a strong impact of particles around it causing 10 damage.',
 				dmg: 10,
 				duration: 650,
-				key: 'atk3',
 				name: 'explode',
 				range: {
 					max: 100,
@@ -59,19 +58,18 @@ export class Shaddy {
 				ready: true,
 			},
 		}
-		this.speed = 15
+		this.speed = 30
 
 		this.active = false
 		this.attacking = false
+		this.facing = true
 	}
 	create() {
 		this.shaddy = this.scene.physics.add.sprite(550, 300, 'shaddy')
 		this.shaddy.setScale(3)
 		this.shaddy.setCollideWorldBounds(true)
-		this.shaddyAnimations = this.scene.cache.json.get('shadAnim')
-		this.scene.anims.fromJSON(this.shaddyAnimations)
+		this.scene.anims.fromJSON(this.scene.cache.json.get('shadAnim'))
 		this.x = this.shaddy.x
-		this.facing = true
 	}
 	update(time, delta) {
 		this.shaddy.anims.play(this.state, true)
@@ -114,26 +112,28 @@ export class Shaddy {
 			this.attacking = true
 			this.shaddy.setVelocityX(0)
 
+			const effect = () => {
+				if (this.facing) {
+					this.scene.player.translate(-this.distanceToPlayer / 2)
+				} else {
+					this.scene.player.translate(this.distanceToPlayer / 2)
+				}
+			}
+
 			setTimeout(() => {
 				this.attacking = false
 				this.active = true
 
 				// if still in range apply dmg/effect
-				if (this.inRangeAttack(this.abilities.grab)) {
+				if (this.#inRangeAttack(this.abilities.grab)) {
 					this.scene.attackEvent(
 						'shaddy',
 						this.abilities.grab,
 						'player',
-						() => {
-							if (this.facing) {
-								this.scene.player.translate(-this.distanceToPlayer / 2)
-							} else {
-								this.scene.player.translate(this.distanceToPlayer / 2)
-							}
-						}
+						effect
 					)
 				}
-				this.setState('idle')
+				this.setState(this.states.idle.key)
 			}, this.abilities.grab.duration)
 		}
 	}
@@ -150,28 +150,20 @@ export class Shaddy {
 				this.active = true
 
 				// if still in range apply dmg/effect
-				if (this.inRangeAttack(this.abilities.explode)) {
+				if (this.#inRangeAttack(this.abilities.explode)) {
 					this.scene.attackEvent('shaddy', this.abilities.explode, 'player')
 				}
-				this.setState('idle')
+				this.setState(this.states.idle.key)
 			}, this.abilities.explode.duration)
 		}
 	}
-	inRangeAttack(attack) {
-		return (
-			this.distanceToPlayer <= attack.range.max &&
-			this.distanceToPlayer > attack.range.min
-		)
-	}
+
 	checkPlayerInRange() {
 		if (this.distanceToPlayer <= 250 && !this.attacking) this.active = true
 
-		if (this.inRangeAttack(this.abilities.grab)) {
-			if (!this.attacking && this.abilities.grab.ready) this.grab()
-		}
-		if (this.inRangeAttack(this.abilities.explode)) {
-			if (!this.attacking && this.abilities.explode.ready) this.explode()
-		}
+		if (this.#availableAttack(this.abilities.grab)) this.grab()
+
+		if (this.#availableAttack(this.abilities.explode)) this.explode()
 	}
 	handleCooldown(ability) {
 		const ab = this.abilities[ability]
@@ -185,4 +177,16 @@ export class Shaddy {
 	}
 
 	/* ------------------------------------------------------ */
+
+	#availableAttack(ability) {
+		if (this.#inRangeAttack(ability) && !this.attacking && ability.ready)
+			return true
+		return false
+	}
+	#inRangeAttack(attack) {
+		return (
+			this.distanceToPlayer <= attack.range.max &&
+			this.distanceToPlayer > attack.range.min
+		)
+	}
 }
