@@ -1,6 +1,7 @@
 import { Scene } from 'phaser'
-import { Overworld } from './scenes/Overworld'
+import { Overworld } from './scenes'
 
+// resources
 import playerSpritesheet from '../src/assets/character/character.png'
 import shadAnimJSON from '../src/assets/enemies/shaddy/shaddy_anim.json'
 import shaddyAtlas from '../src/assets/enemies/shaddy/shaddy_atlas.json'
@@ -26,7 +27,6 @@ export class Bootload extends Scene {
 	}
 
 	create() {
-		console.log(playerSpritesheet)
 		console.info('resources loaded.')
 		this.scene.add('Overworld', new Overworld()) // <- scene creation
 		this.scene.start('Overworld') // <- play scene

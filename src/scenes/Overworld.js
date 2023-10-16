@@ -1,6 +1,6 @@
 import { Scene, Input } from 'phaser'
 import { Player } from '../classes'
-import { Shaddy } from '../gameObjects/Shaddy'
+import { Shaddy } from '../gameObjects'
 
 export class Overworld extends Scene {
 	constructor() {
