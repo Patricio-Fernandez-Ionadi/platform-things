@@ -30,7 +30,7 @@ export class Shaddy {
 			grab: {
 				cd: 8,
 				description:
-					'If player is 110 or less units in range, it will grab and move him closer about the 50% of the distance between both of them.',
+					'If player is 180 or less units in range, it will grab and move him closer about the 50% of the distance between both of them.',
 				dmg: 0,
 				duration: 500,
 				key: 'atk1',
