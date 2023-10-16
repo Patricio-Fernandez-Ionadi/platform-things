@@ -14,11 +14,11 @@ export class Shaddy extends Entity {
 			walk: {
 				key: 'walk',
 			},
-			hit: {
-				key: 'gethit',
+			hurt: {
+				key: 'hurt',
 			},
-			dead: {
-				key: 'dead',
+			faint: {
+				key: 'faint',
 			},
 			grab: {
 				key: 'atk1',

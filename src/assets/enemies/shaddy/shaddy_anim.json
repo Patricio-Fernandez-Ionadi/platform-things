@@ -189,7 +189,7 @@
 			]
 		},
 		{
-			"key": "gethit",
+			"key": "hurt",
 			"type": "frames",
 			"repeat": 0,
 			"frameRate": 12,
@@ -209,7 +209,7 @@
 			]
 		},
 		{
-			"key": "dead",
+			"key": "faint",
 			"type": "frames",
 			"repeat": 0,
 			"frameRate": 12,
