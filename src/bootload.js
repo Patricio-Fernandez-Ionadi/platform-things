@@ -8,7 +8,7 @@ export class Bootload extends Scene {
 
 	preload() {
 		console.info('loading...')
-		this.load.path = 'src/assets/'
+		this.load.path = '../src/assets/'
 
 		// PLAYER
 		this.load.spritesheet('player', 'character/character.png', {
