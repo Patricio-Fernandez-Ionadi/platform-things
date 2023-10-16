@@ -3,7 +3,7 @@ import { Right, Left } from '../state/State'
 // ---------------
 export class StandRight extends Right {
 	constructor(player) {
-		super(player, 'STAND')
+		super(player, 'stand')
 	}
 
 	enter() {
@@ -11,64 +11,64 @@ export class StandRight extends Right {
 	}
 
 	handleInput(input) {
-		if (input.right.isDown) this.setAnim('RUN')
-		else if (input.left.isDown) this.flipAnim('RUN')
-		else if (input.up.isDown) this.setAnim('JUMP')
-		else if (input.down.isDown) this.setAnim('ON_KNEES')
-		else if (input.shift.isDown) this.setAnim('WEAPON_DRAW')
+		if (input.right.isDown) this.setAnim(this.e.states.run)
+		else if (input.left.isDown) this.flipAnim(this.e.states.run)
+		else if (input.up.isDown) this.setAnim(this.e.states.jump)
+		else if (input.down.isDown) this.setAnim(this.e.states.on_knees)
+		else if (input.shift.isDown) this.setAnim(this.e.states.weapon_draw)
 		else if (input.Q.isDown && this.e.abilities.cutUp.ready)
-			this.setAnim('cutUp')
+			this.setAnim(this.e.states.cutUp)
 		else if (input.W.isDown && this.e.abilities.cutDown.ready)
-			this.setAnim('cutDown')
+			this.setAnim(this.e.states.cutDown)
 		else if (input.E.isDown && this.e.abilities.swift.ready)
-			this.setAnim('swift')
+			this.setAnim(this.e.states.swift)
 	}
 }
 export class StandLeft extends Left {
 	constructor(player) {
-		super(player, 'STAND')
+		super(player, 'stand')
 	}
 	enter() {
 		this.e.sprite.setVelocityX(0)
 	}
 
 	handleInput(input) {
-		if (input.right.isDown) this.flipAnim('RUN')
-		else if (input.left.isDown) this.setAnim('RUN')
-		else if (input.up.isDown) this.setAnim('JUMP')
-		else if (input.down.isDown) this.setAnim('ON_KNEES')
-		else if (input.shift.isDown) this.setAnim('WEAPON_DRAW')
+		if (input.right.isDown) this.flipAnim(this.e.states.run)
+		else if (input.left.isDown) this.setAnim(this.e.states.run)
+		else if (input.up.isDown) this.setAnim(this.e.states.jump)
+		else if (input.down.isDown) this.setAnim(this.e.states.on_knees)
+		else if (input.shift.isDown) this.setAnim(this.e.states.weapon_draw)
 		else if (input.Q.isDown && this.e.abilities.cutUp.ready)
-			this.setAnim('cutUp')
+			this.setAnim(this.e.states.cutUp)
 		else if (input.W.isDown && this.e.abilities.cutDown.ready)
-			this.setAnim('cutDown')
+			this.setAnim(this.e.states.cutDown)
 		else if (input.E.isDown && this.e.abilities.swift.ready)
-			this.setAnim('swift')
+			this.setAnim(this.e.states.swift)
 	}
 }
 // ---------------
 export class OnKneesRight extends Right {
 	constructor(player) {
-		super(player, 'ON_KNEES')
+		super(player, 'on_knees')
 	}
 	handleInput(input) {
-		if (input.down.isUp) this.setAnim('STAND')
+		if (input.down.isUp) this.setAnim(this.e.states.stand)
 		else if (input.left.isDown) this.flipAnim()
 	}
 }
 export class OnKneesLeft extends Left {
 	constructor(player) {
-		super(player, 'ON_KNEES')
+		super(player, 'on_knees')
 	}
 	handleInput(input) {
-		if (input.down.isUp) this.setAnim('STAND')
+		if (input.down.isUp) this.setAnim(this.e.states.stand)
 		else if (input.right.isDown) this.flipAnim()
 	}
 }
 // ---------------
 export class RunRight extends Right {
 	constructor(player) {
-		super(player, 'RUN')
+		super(player, 'run')
 	}
 	enter() {
 		this.e.sprite.setVelocityX(this.e.speed)
@@ -76,23 +76,24 @@ export class RunRight extends Right {
 
 	handleInput(input) {
 		if (input.left.isDown && input.right.isUp) this.flipAnim()
-		else if (input.up.isDown) this.setAnim('JUMP')
+		else if (input.up.isDown) this.setAnim(this.e.states.jump)
 		else if (input.right.isUp) {
-			if (this.e.holdingWeapon) this.setAnim('WEAPON_STAND')
-			else this.setAnim('STAND')
-		} else if (input.up.isDown) this.setAnim('JUMP')
-		else if (this.e.onFloor && input.down.isDown) this.setAnim('SLICE')
+			if (this.e.holdingWeapon) this.setAnim(this.e.states.weapon_stand)
+			else this.setAnim(this.e.states.stand)
+		} else if (input.up.isDown) this.setAnim(this.e.states.jump)
+		else if (this.e.onFloor && input.down.isDown)
+			this.setAnim(this.e.states.slice)
 		else if (input.Q.isDown && this.e.abilities.cutUp.ready)
-			this.setAnim('cutUp')
+			this.setAnim(this.e.states.cutUp)
 		else if (input.W.isDown && this.e.abilities.cutDown.ready)
-			this.setAnim('cutDown')
+			this.setAnim(this.e.states.cutDown)
 		else if (input.E.isDown && this.e.abilities.swift.ready)
-			this.setAnim('swift')
+			this.setAnim(this.e.states.swift)
 	}
 }
 export class RunLeft extends Left {
 	constructor(player) {
-		super(player, 'RUN')
+		super(player, 'run')
 	}
 
 	enter() {
@@ -102,22 +103,23 @@ export class RunLeft extends Left {
 	handleInput(input) {
 		if (input.right.isDown && input.left.isUp) this.flipAnim()
 		else if (input.left.isUp) {
-			if (this.e.holdingWeapon) this.setAnim('WEAPON_STAND')
-			else this.setAnim('STAND')
-		} else if (input.up.isDown) this.setAnim('JUMP')
-		else if (this.e.onFloor && input.down.isDown) this.setAnim('SLICE')
+			if (this.e.holdingWeapon) this.setAnim(this.e.states.weapon_stand)
+			else this.setAnim(this.e.states.stand)
+		} else if (input.up.isDown) this.setAnim(this.e.states.jump)
+		else if (this.e.onFloor && input.down.isDown)
+			this.setAnim(this.e.states.slice)
 		else if (input.Q.isDown && this.e.abilities.cutUp.ready)
-			this.setAnim('cutUp')
+			this.setAnim(this.e.states.cutUp)
 		else if (input.W.isDown && this.e.abilities.cutDown.ready)
-			this.setAnim('cutDown')
+			this.setAnim(this.e.states.cutDown)
 		else if (input.E.isDown && this.e.abilities.swift.ready)
-			this.setAnim('swift')
+			this.setAnim(this.e.states.swift)
 	}
 }
 // ---------------
 export class JumpRollRight extends Right {
 	constructor(player) {
-		super(player, 'JUMPROLL')
+		super(player, 'jumproll')
 	}
 
 	enter() {
@@ -126,14 +128,14 @@ export class JumpRollRight extends Right {
 
 	handleInput(input) {
 		if (this.e.onFloor) {
-			if (this.e.holdingWeapon) this.setAnim('WEAPON_STAND')
-			else this.setAnim('STAND')
+			if (this.e.holdingWeapon) this.setAnim(this.e.states.weapon_stand)
+			else this.setAnim(this.e.states.stand)
 		}
 	}
 }
 export class JumpRollLeft extends Left {
 	constructor(player) {
-		super(player, 'JUMPROLL')
+		super(player, 'jumproll')
 	}
 
 	enter() {
@@ -142,40 +144,40 @@ export class JumpRollLeft extends Left {
 
 	handleInput(input) {
 		if (this.e.onFloor) {
-			if (this.e.holdingWeapon) this.setAnim('WEAPON_STAND')
-			else this.setAnim('STAND')
+			if (this.e.holdingWeapon) this.setAnim(this.e.states.weapon_stand)
+			else this.setAnim(this.e.states.stand)
 		}
 	}
 }
 // ---------------
 export class FallRight extends Right {
 	constructor(player) {
-		super(player, 'FALL')
+		super(player, 'fall')
 	}
 
 	handleInput(input) {
 		if (this.e.onFloor) {
-			if (this.e.holdingWeapon) this.setAnim('WEAPON_STAND')
-			else this.setAnim('STAND')
+			if (this.e.holdingWeapon) this.setAnim(this.e.states.weapon_stand)
+			else this.setAnim(this.e.states.stand)
 		}
 	}
 }
 export class FallLeft extends Left {
 	constructor(player) {
-		super(player, 'FALL')
+		super(player, 'fall')
 	}
 
 	handleInput(input) {
 		if (this.e.onFloor) {
-			if (this.e.holdingWeapon) this.setAnim('WEAPON_STAND')
-			else this.setAnim('STAND')
+			if (this.e.holdingWeapon) this.setAnim(this.e.states.weapon_stand)
+			else this.setAnim(this.e.states.stand)
 		}
 	}
 }
 // ---------------
 export class SliceRight extends Right {
 	constructor(player) {
-		super(player, 'SLICE')
+		super(player, 'slice')
 	}
 
 	enter() {
@@ -191,9 +193,9 @@ export class SliceRight extends Right {
 
 	handleInput(input) {
 		if (!this.isSlicing) {
-			if (input.right.isDown) this.setAnim('RUN')
-			else if (input.left.isDown) this.flipAnim('RUN')
-			else if (input.down.isDown) this.setAnim('ON_KNEES')
+			if (input.right.isDown) this.setAnim(this.e.states.run)
+			else if (input.left.isDown) this.flipAnim(this.e.states.run)
+			else if (input.down.isDown) this.setAnim(this.e.states.on_knees)
 			else if (
 				input.right.isUp &&
 				input.left.isUp &&
@@ -201,8 +203,8 @@ export class SliceRight extends Right {
 				input.down.isUp
 			) {
 				if (this.e.onFloor) {
-					if (this.e.holdingWeapon) this.setAnim('WEAPON_STAND')
-					else this.setAnim('STAND')
+					if (this.e.holdingWeapon) this.setAnim(this.e.states.weapon_stand)
+					else this.setAnim(this.e.states.stand)
 				}
 			}
 		}
@@ -210,7 +212,7 @@ export class SliceRight extends Right {
 }
 export class SliceLeft extends Left {
 	constructor(player) {
-		super(player, 'SLICE')
+		super(player, 'slice')
 	}
 
 	enter() {
@@ -226,9 +228,9 @@ export class SliceLeft extends Left {
 
 	handleInput(input) {
 		if (!this.isSlicing) {
-			if (input.right.isDown) this.flipAnim('RUN')
-			else if (input.left.isDown) this.setAnim('RUN')
-			else if (input.down.isDown) this.setAnim('ON_KNEES')
+			if (input.right.isDown) this.flipAnim(this.e.states.run)
+			else if (input.left.isDown) this.setAnim(this.e.states.run)
+			else if (input.down.isDown) this.setAnim(this.e.states.on_knees)
 			else if (
 				input.right.isUp &&
 				input.left.isUp &&
@@ -236,8 +238,8 @@ export class SliceLeft extends Left {
 				input.down.isUp
 			) {
 				if (this.e.onFloor) {
-					if (this.e.holdingWeapon) this.setAnim('WEAPON_STAND')
-					else this.setAnim('STAND')
+					if (this.e.holdingWeapon) this.setAnim(this.e.states.weapon_stand)
+					else this.setAnim(this.e.states.stand)
 				}
 			}
 		}
@@ -246,7 +248,7 @@ export class SliceLeft extends Left {
 // ---------------
 export class WeaponStandRight extends Right {
 	constructor(player) {
-		super(player, 'WEAPON_STAND')
+		super(player, 'weapon_stand')
 	}
 
 	enter() {
@@ -254,22 +256,22 @@ export class WeaponStandRight extends Right {
 	}
 
 	handleInput(input) {
-		if (input.right.isDown) this.setAnim('RUN')
-		else if (input.left.isDown) this.flipAnim('RUN')
-		else if (input.up.isDown) this.setAnim('JUMP')
-		else if (input.down.isDown) this.setAnim('ON_KNEES')
+		if (input.right.isDown) this.setAnim(this.e.states.run)
+		else if (input.left.isDown) this.flipAnim(this.e.states.run)
+		else if (input.up.isDown) this.setAnim(this.e.states.jump)
+		else if (input.down.isDown) this.setAnim(this.e.states.on_knees)
 		else if (input.Q.isDown && this.e.abilities.cutUp.ready)
-			this.setAnim('cutUp')
+			this.setAnim(this.e.states.cutUp)
 		else if (input.W.isDown && this.e.abilities.cutDown.ready)
-			this.setAnim('cutDown')
+			this.setAnim(this.e.states.cutDown)
 		else if (input.E.isDown && this.e.abilities.swift.ready)
-			this.setAnim('swift')
-		else if (input.shift.isDown) this.setAnim('WEAPON_SHEALTH')
+			this.setAnim(this.e.states.swift)
+		else if (input.shift.isDown) this.setAnim(this.e.states.weapon_shealth)
 	}
 }
 export class WeaponStandLeft extends Left {
 	constructor(player) {
-		super(player, 'WEAPON_STAND')
+		super(player, 'weapon_stand')
 	}
 
 	enter() {
@@ -277,17 +279,17 @@ export class WeaponStandLeft extends Left {
 	}
 
 	handleInput(input) {
-		if (input.right.isDown) this.flipAnim('RUN')
-		else if (input.left.isDown) this.setAnim('RUN')
-		else if (input.up.isDown) this.setAnim('JUMP')
-		else if (input.down.isDown) this.setAnim('ON_KNEES')
+		if (input.right.isDown) this.flipAnim(this.e.states.run)
+		else if (input.left.isDown) this.setAnim(this.e.states.run)
+		else if (input.up.isDown) this.setAnim(this.e.states.jump)
+		else if (input.down.isDown) this.setAnim(this.e.states.on_knees)
 		else if (input.Q.isDown && this.e.abilities.cutUp.ready)
-			this.setAnim('cutUp')
+			this.setAnim(this.e.states.cutUp)
 		else if (input.W.isDown && this.e.abilities.cutDown.ready)
-			this.setAnim('cutDown')
+			this.setAnim(this.e.states.cutDown)
 		else if (input.E.isDown && this.e.abilities.swift.ready)
-			this.setAnim('swift')
-		else if (input.shift.isDown) this.setAnim('WEAPON_SHEALTH')
+			this.setAnim(this.e.states.swift)
+		else if (input.shift.isDown) this.setAnim(this.e.states.weapon_shealth)
 	}
 }
 // ---------------
@@ -304,11 +306,11 @@ export class Attack1Right extends Right {
 
 	handleInput(input) {
 		if (!this.e.attacking) {
-			if (input.right.isDown) this.setAnim('RUN')
-			else if (input.left.isDown) this.flipAnim('RUN')
-			else if (input.down.isDown) this.setAnim('ON_KNEES')
-			else if (input.W.isDown) this.setAnim('cutDown')
-			else this.setAnim('WEAPON_STAND')
+			if (input.right.isDown) this.setAnim(this.e.states.run)
+			else if (input.left.isDown) this.flipAnim(this.e.states.run)
+			else if (input.down.isDown) this.setAnim(this.e.states.on_knees)
+			else if (input.W.isDown) this.setAnim(this.e.states.cutDown)
+			else this.setAnim(this.e.states.weapon_stand)
 		}
 	}
 }
@@ -325,11 +327,11 @@ export class Attack1Left extends Left {
 
 	handleInput(input) {
 		if (!this.e.attacking) {
-			if (input.right.isDown) this.flipAnim('RUN')
-			else if (input.left.isDown) this.setAnim('RUN')
-			else if (input.down.isDown) this.setAnim('ON_KNEES')
-			else if (input.W.isDown) this.setAnim('cutDown')
-			else this.setAnim('WEAPON_STAND')
+			if (input.right.isDown) this.flipAnim(this.e.states.run)
+			else if (input.left.isDown) this.setAnim(this.e.states.run)
+			else if (input.down.isDown) this.setAnim(this.e.states.on_knees)
+			else if (input.W.isDown) this.setAnim(this.e.states.cutDown)
+			else this.setAnim(this.e.states.weapon_stand)
 		}
 	}
 }
@@ -347,10 +349,10 @@ export class Attack2Right extends Right {
 
 	handleInput(input) {
 		if (!this.e.attacking && this.e.onFloor) {
-			if (input.right.isDown) this.setAnim('RUN')
-			else if (input.left.isDown) this.flipAnim('RUN')
-			else if (input.down.isDown) this.setAnim('ON_KNEES')
-			else this.setAnim('WEAPON_STAND')
+			if (input.right.isDown) this.setAnim(this.e.states.run)
+			else if (input.left.isDown) this.flipAnim(this.e.states.run)
+			else if (input.down.isDown) this.setAnim(this.e.states.on_knees)
+			else this.setAnim(this.e.states.weapon_stand)
 		}
 	}
 }
@@ -367,10 +369,10 @@ export class Attack2Left extends Left {
 
 	handleInput(input) {
 		if (!this.e.attacking) {
-			if (input.right.isDown) this.flipAnim('RUN')
-			else if (input.left.isDown) this.setAnim('RUN')
-			else if (input.down.isDown) this.setAnim('ON_KNEES')
-			else this.setAnim('WEAPON_STAND')
+			if (input.right.isDown) this.flipAnim(this.e.states.run)
+			else if (input.left.isDown) this.setAnim(this.e.states.run)
+			else if (input.down.isDown) this.setAnim(this.e.states.on_knees)
+			else this.setAnim(this.e.states.weapon_stand)
 		}
 	}
 }
@@ -388,10 +390,10 @@ export class Attack3Right extends Right {
 
 	handleInput(input) {
 		if (!this.e.attacking && this.e.onFloor) {
-			if (input.right.isDown) this.setAnim('RUN')
-			else if (input.left.isDown) this.flipAnim('RUN')
-			else if (input.down.isDown) this.setAnim('ON_KNEES')
-			else this.setAnim('WEAPON_STAND')
+			if (input.right.isDown) this.setAnim(this.e.states.run)
+			else if (input.left.isDown) this.flipAnim(this.e.states.run)
+			else if (input.down.isDown) this.setAnim(this.e.states.on_knees)
+			else this.setAnim(this.e.states.weapon_stand)
 		}
 	}
 }
@@ -408,17 +410,17 @@ export class Attack3Left extends Left {
 
 	handleInput(input) {
 		if (!this.e.attacking) {
-			if (input.right.isDown) this.flipAnim('RUN')
-			else if (input.left.isDown) this.setAnim('RUN')
-			else if (input.down.isDown) this.setAnim('ON_KNEES')
-			else this.setAnim('WEAPON_STAND')
+			if (input.right.isDown) this.flipAnim(this.e.states.run)
+			else if (input.left.isDown) this.setAnim(this.e.states.run)
+			else if (input.down.isDown) this.setAnim(this.e.states.on_knees)
+			else this.setAnim(this.e.states.weapon_stand)
 		}
 	}
 }
 // ---------------
 export class HurtRight extends Right {
 	constructor(player) {
-		super(player, 'HURT')
+		super(player, 'hurt')
 	}
 
 	enter() {
@@ -429,14 +431,14 @@ export class HurtRight extends Right {
 
 	handleInput() {
 		if (!this.hurting) {
-			if (this.e.holdingWeapon) this.setAnim('WEAPON_STAND')
-			else this.setAnim('STAND')
+			if (this.e.holdingWeapon) this.setAnim(this.e.states.weapon_stand)
+			else this.setAnim(this.e.states.stand)
 		}
 	}
 }
 export class HurtLeft extends Left {
 	constructor(player) {
-		super(player, 'HURT')
+		super(player, 'hurt')
 	}
 
 	enter() {
@@ -447,15 +449,15 @@ export class HurtLeft extends Left {
 
 	handleInput() {
 		if (!this.hurting) {
-			if (this.e.holdingWeapon) this.setAnim('WEAPON_STAND')
-			else this.setAnim('STAND')
+			if (this.e.holdingWeapon) this.setAnim(this.e.states.weapon_stand)
+			else this.setAnim(this.e.states.stand)
 		}
 	}
 }
 // ---------------
 export class WeaponDrawRight extends Right {
 	constructor(player) {
-		super(player, 'WEAPON_DRAW')
+		super(player, 'weapon_draw')
 	}
 
 	enter() {
@@ -466,12 +468,12 @@ export class WeaponDrawRight extends Right {
 	}
 
 	handleInput(input) {
-		if (!this.drawWeapon) this.setAnim('WEAPON_STAND')
+		if (!this.drawWeapon) this.setAnim(this.e.states.weapon_stand)
 	}
 }
 export class WeaponDrawLeft extends Left {
 	constructor(player) {
-		super(player, 'WEAPON_DRAW')
+		super(player, 'weapon_draw')
 	}
 
 	enter() {
@@ -482,13 +484,13 @@ export class WeaponDrawLeft extends Left {
 	}
 
 	handleInput(input) {
-		if (!this.drawWeapon) this.setAnim('WEAPON_STAND')
+		if (!this.drawWeapon) this.setAnim(this.e.states.weapon_stand)
 	}
 }
 // ---------------
 export class WeaponShealthRight extends Right {
 	constructor(player) {
-		super(player, 'WEAPON_SHEALTH')
+		super(player, 'weapon_shealth')
 	}
 
 	enter() {
@@ -499,12 +501,12 @@ export class WeaponShealthRight extends Right {
 	}
 
 	handleInput(input) {
-		if (!this.shealthWeapon) this.setAnim('STAND')
+		if (!this.shealthWeapon) this.setAnim(this.e.states.stand)
 	}
 }
 export class WeaponShealthLeft extends Left {
 	constructor(player) {
-		super(player, 'WEAPON_SHEALTH')
+		super(player, 'weapon_shealth')
 	}
 
 	enter() {
@@ -515,13 +517,13 @@ export class WeaponShealthLeft extends Left {
 	}
 
 	handleInput(input) {
-		if (!this.shealthWeapon) this.setAnim('STAND')
+		if (!this.shealthWeapon) this.setAnim(this.e.states.stand)
 	}
 }
 // ---------------
 export class JumpRight extends Right {
 	constructor(player) {
-		super(player, 'JUMP')
+		super(player, 'jump')
 	}
 
 	enter() {
@@ -530,14 +532,14 @@ export class JumpRight extends Right {
 	}
 
 	handleInput(input) {
-		if (this.e.sprite.body.velocity.y > 0) this.setAnim('FALL')
+		if (this.e.sprite.body.velocity.y > 0) this.setAnim(this.e.states.fall)
 		else if (input.space.isDown && this.e.sprite.body.velocity.x > 0)
-			this.setAnim('JUMPROLL')
+			this.setAnim(this.e.states.jumproll)
 	}
 }
 export class JumpLeft extends Left {
 	constructor(player) {
-		super(player, 'JUMP')
+		super(player, 'jump')
 	}
 
 	enter() {
@@ -546,8 +548,8 @@ export class JumpLeft extends Left {
 	}
 
 	handleInput(input) {
-		if (this.e.sprite.body.velocity.y > 0) this.setAnim('FALL')
+		if (this.e.sprite.body.velocity.y > 0) this.setAnim(this.e.states.fall)
 		else if (input.space.isDown && this.e.sprite.body.velocity.x < 0)
-			this.setAnim('JUMPROLL')
+			this.setAnim(this.e.states.jumproll)
 	}
 }

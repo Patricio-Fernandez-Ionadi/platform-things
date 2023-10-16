@@ -3,15 +3,16 @@ class State {
 		this.e = entity
 		this.state = key
 	}
-	setAnim(key) {
-		this.e.setState(key)
+	setAnim(state) {
+		this.e.setState(state)
 	}
-	flipAnim(key) {
+	flipAnim(state) {
 		this.e.facing = !this.e.facing
-		if (!key) {
-			this.e.setState(this.state)
+
+		if (!state) {
+			this.e.setState(this.e.states[this.state])
 		} else {
-			this.e.setState(key)
+			this.e.setState(state)
 		}
 	}
 	animate() {

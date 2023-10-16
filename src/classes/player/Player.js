@@ -37,51 +37,324 @@ const playerConfig = {
 export class Player extends Entity {
 	constructor(scene) {
 		super(scene, playerConfig)
-		this.statesList = {
-			STAND_RIGHT: new StandRight(this),
-			STAND_LEFT: new StandLeft(this),
-			ON_KNEES_RIGHT: new OnKneesRight(this),
-			ON_KNEES_LEFT: new OnKneesLeft(this),
-			RUN_RIGHT: new RunRight(this),
-			RUN_LEFT: new RunLeft(this),
-			JUMPROLL_RIGHT: new JumpRollRight(this),
-			JUMPROLL_LEFT: new JumpRollLeft(this),
-			FALL_RIGHT: new FallRight(this),
-			FALL_LEFT: new FallLeft(this),
-			SLICE_RIGHT: new SliceRight(this),
-			SLICE_LEFT: new SliceLeft(this),
-			HANG_RIGHT: '12',
-			HANG_LEFT: '13',
-			HANG_RELEASE_RIGHT: '14',
-			HANG_RELEASE_LEFT: '15',
-			WEAPON_STAND_RIGHT: new WeaponStandRight(this),
-			WEAPON_STAND_LEFT: new WeaponStandLeft(this),
-			cutUp_RIGHT: new Attack1Right(this),
-			cutUp_LEFT: new Attack1Left(this),
-			cutDown_RIGHT: new Attack2Right(this),
-			cutDown_LEFT: new Attack2Left(this),
-			swift_RIGHT: new Attack3Right(this),
-			swift_LEFT: new Attack3Left(this),
-			HURT_RIGHT: new HurtRight(this),
-			HURT_LEFT: new HurtLeft(this),
-			FAINT_RIGHT: '26',
-			FAINT_LEFT: '27',
-			WEAPON_DRAW_RIGHT: new WeaponDrawRight(this),
-			WEAPON_DRAW_LEFT: new WeaponDrawLeft(this),
-			WEAPON_SHEALTH_RIGHT: new WeaponShealthRight(this),
-			WEAPON_SHEALTH_LEFT: new WeaponShealthLeft(this),
-			JUMP_RIGHT: new JumpRight(this),
-			JUMP_LEFT: new JumpLeft(this),
-			DIVE_RIGHT: '34',
-			DIVE_LEFT: '35',
-			SWIM_UP_RIGHT: '36',
-			SWIM_UP_LEFT: '37',
-			SWIM_RIGHT: '38',
-			SWIM_LEFT: '39',
-			CLIMB_RIGHT: '40',
-			CLIMB_LEFT: '41',
+		this.states = {
+			stand: {
+				key: 'stand',
+				dir: {
+					right: new StandRight(this),
+					left: new StandLeft(this),
+				},
+				animation: {
+					key: 'stand',
+					frames: this.scene.anims.generateFrameNumbers('player', {
+						frames: [0, 1, 2, 3],
+					}),
+					frameRate: 8,
+					repeat: -1,
+				},
+			},
+			on_knees: {
+				key: 'on_knees',
+				dir: {
+					right: new OnKneesRight(this),
+					left: new OnKneesLeft(this),
+				},
+				animation: {
+					key: 'on_knees',
+					frames: this.scene.anims.generateFrameNumbers('player', {
+						frames: [4, 5, 6, 7],
+					}),
+					frameRate: 8,
+					repeat: -1,
+				},
+			},
+			run: {
+				key: 'run',
+				dir: {
+					right: new RunRight(this),
+					left: new RunLeft(this),
+				},
+				animation: {
+					key: 'run',
+					frames: this.scene.anims.generateFrameNumbers('player', {
+						frames: [8, 9, 10, 11, 12, 13],
+					}),
+					frameRate: 10,
+					repeat: -1,
+				},
+			},
+			jumproll: {
+				key: 'jumproll',
+				dir: {
+					right: new JumpRollRight(this),
+					left: new JumpRollLeft(this),
+				},
+				animation: {
+					key: 'jumproll',
+					frames: this.scene.anims.generateFrameNumbers('player', {
+						frames: [/* 14,15,*/ 16, 17, 18, 19, 20, 21],
+					}),
+					frameRate: 8,
+					repeat: 0,
+				},
+			},
+			fall: {
+				key: 'fall',
+				dir: {
+					right: new FallRight(this),
+					left: new FallLeft(this),
+				},
+				animation: {
+					key: 'fall',
+					frames: this.scene.anims.generateFrameNumbers('player', {
+						frames: [22, 23],
+					}),
+					frameRate: 8,
+					repeat: -1,
+				},
+			},
+			slice: {
+				key: 'slice',
+				dir: {
+					right: new SliceRight(this),
+					left: new SliceLeft(this),
+				},
+				animation: {
+					key: 'slice',
+					frames: this.scene.anims.generateFrameNumbers('player', {
+						frames: [24, 25, 26, 27, 28],
+					}),
+					frameRate: 8,
+					repeat: -1,
+				},
+			},
+			hang: {
+				key: 'hang',
+				dir: {
+					right: '12',
+					left: '13',
+				},
+				animation: {
+					key: 'hang',
+					frames: this.scene.anims.generateFrameNumbers('player', {
+						frames: [29, 30, 31, 32],
+					}),
+					frameRate: 8,
+					repeat: -1,
+				},
+			},
+			hang_release: {
+				key: 'hang_release',
+				dir: {
+					right: '14',
+					left: '15',
+				},
+				animation: {
+					key: 'hang_release',
+					frames: this.scene.anims.generateFrameNumbers('player', {
+						frames: [33, 34, 35, 36, 37],
+					}),
+					frameRate: 8,
+					repeat: -1,
+				},
+			},
+			weapon_stand: {
+				key: 'weapon_stand',
+				dir: {
+					right: new WeaponStandRight(this),
+					left: new WeaponStandLeft(this),
+				},
+				animation: {
+					key: 'weapon_stand',
+					frames: this.scene.anims.generateFrameNumbers('player', {
+						frames: [38, 39, 40, 41],
+					}),
+					frameRate: 8,
+					repeat: -1,
+				},
+			},
+			cutUp: {
+				key: 'cutUp',
+				dir: {
+					right: new Attack1Right(this),
+					left: new Attack1Left(this),
+				},
+				animation: {
+					key: 'cutUp',
+					frames: this.scene.anims.generateFrameNumbers('player', {
+						frames: [42, 43, 44, 45, 46, 47],
+					}),
+					frameRate: 12,
+					repeat: 0,
+				},
+			},
+			cutDown: {
+				key: 'cutDown',
+				dir: {
+					right: new Attack2Right(this),
+					left: new Attack2Left(this),
+				},
+				animation: {
+					key: 'cutDown',
+					frames: this.scene.anims.generateFrameNumbers('player', {
+						frames: [49, 50, 51],
+					}),
+					frameRate: 12,
+					repeat: 0,
+				},
+			},
+			swift: {
+				key: 'swift',
+				dir: {
+					right: new Attack3Right(this),
+					left: new Attack3Left(this),
+				},
+				animation: {
+					key: 'swift',
+					frames: this.scene.anims.generateFrameNumbers('player', {
+						frames: [52, 53, 54, 55, 56, 57, 58],
+					}),
+					frameRate: 12,
+					repeat: 0,
+				},
+			},
+			hurt: {
+				key: 'hurt',
+				dir: {
+					right: new HurtRight(this),
+					left: new HurtLeft(this),
+				},
+				animation: {
+					key: 'hurt',
+					frames: this.scene.anims.generateFrameNumbers('player', {
+						frames: [59, 60, 61],
+					}),
+					frameRate: 8,
+					repeat: -1,
+				},
+			},
+			faint: {
+				key: 'faint',
+				dir: {
+					right: '26',
+					left: '27',
+				},
+				animation: {
+					key: 'faint',
+					frames: this.scene.anims.generateFrameNumbers('player', {
+						frames: [62, 63, 64, 65, 66, 67, 68],
+					}),
+					frameRate: 8,
+					repeat: -1,
+				},
+			},
+			weapon_draw: {
+				key: 'weapon_draw',
+				dir: {
+					right: new WeaponDrawRight(this),
+					left: new WeaponDrawLeft(this),
+				},
+				animation: {
+					key: 'weapon_draw',
+					frames: this.scene.anims.generateFrameNumbers('player', {
+						frames: [69, 70, 71, 72],
+					}),
+					frameRate: 8,
+					repeat: 0,
+				},
+			},
+			weapon_shealth: {
+				key: 'weapon_shealth',
+				dir: {
+					right: new WeaponShealthRight(this),
+					left: new WeaponShealthLeft(this),
+				},
+				animation: {
+					key: 'weapon_shealth',
+					frames: this.scene.anims.generateFrameNumbers('player', {
+						frames: [73, 74, 75, 76],
+					}),
+					frameRate: 8,
+					repeat: -1,
+				},
+			},
+			jump: {
+				key: 'jump',
+				dir: {
+					right: new JumpRight(this),
+					left: new JumpLeft(this),
+				},
+				animation: {
+					key: 'jump',
+					frames: this.scene.anims.generateFrameNumbers('player', {
+						frames: [77, 78],
+					}),
+					frameRate: 8,
+					repeat: -1,
+				},
+			},
+			dive: {
+				key: 'dive',
+				dir: {
+					right: '34',
+					left: '35',
+				},
+				animation: {
+					key: 'dive',
+					frames: this.scene.anims.generateFrameNumbers('player', {
+						frames: [79, 80],
+					}),
+					frameRate: 8,
+					repeat: -1,
+				},
+			},
+			swim_up: {
+				key: 'swim_up',
+				dir: {
+					right: '36',
+					left: '37',
+				},
+				animation: {
+					key: 'swim_up',
+					frames: this.scene.anims.generateFrameNumbers('player', {
+						frames: [81, 82, 83, 84, 85, 86],
+					}),
+					frameRate: 8,
+					repeat: -1,
+				},
+			},
+			swim: {
+				key: 'swim',
+				dir: {
+					right: '38',
+					left: '39',
+				},
+				animation: {
+					key: 'swim',
+					frames: this.scene.anims.generateFrameNumbers('player', {
+						frames: [87, 88, 89, 90],
+					}),
+					frameRate: 8,
+					repeat: -1,
+				},
+			},
+			climb: {
+				key: 'climb',
+				dir: {
+					right: '40',
+					left: '41',
+				},
+				animation: {
+					key: 'climb',
+					frames: this.scene.anims.generateFrameNumbers('player', {
+						frames: [91, 92, 93, 94],
+					}),
+					frameRate: 8,
+					repeat: -1,
+				},
+			},
 		}
-		this.currentState = this.statesList['HURT_RIGHT']
+		this.currentState = this.states.stand.dir.right
 
 		this.speed = this.scale * 100
 		this.jumpBoost = 650
@@ -130,9 +403,9 @@ export class Player extends Entity {
 	}
 	setState(state) {
 		if (this.facing) {
-			this.currentState = this.statesList[`${state}_LEFT`]
+			this.currentState = this.states[state.key].dir.left
 		} else if (!this.facing) {
-			this.currentState = this.statesList[`${state}_RIGHT`]
+			this.currentState = this.states[state.key].dir.right
 		}
 
 		if (this.currentState.enter) this.currentState.enter()
@@ -152,7 +425,7 @@ export class Player extends Entity {
 	}
 	takeDamage(atkdmg) {
 		this.health -= atkdmg
-		this.setState('HURT')
+		this.setState(this.states.hurt)
 
 		this.scene.tweens.add({
 			targets: this.sprite,
@@ -183,196 +456,27 @@ export class Player extends Entity {
 	/* ------------------------------------------------------ */
 
 	#createAnimations() {
-		const stand = {
-			key: 'STAND',
-			frames: this.scene.anims.generateFrameNumbers('player', {
-				frames: [0, 1, 2, 3],
-			}),
-			frameRate: 8,
-			repeat: -1,
-		}
-		const on_knees = {
-			key: 'ON_KNEES',
-			frames: this.scene.anims.generateFrameNumbers('player', {
-				frames: [4, 5, 6, 7],
-			}),
-			frameRate: 8,
-			repeat: -1,
-		}
-		const run = {
-			key: 'RUN',
-			frames: this.scene.anims.generateFrameNumbers('player', {
-				frames: [8, 9, 10, 11, 12, 13],
-			}),
-			frameRate: 10,
-			repeat: -1,
-		}
-		const jumproll = {
-			key: 'JUMPROLL',
-			frames: this.scene.anims.generateFrameNumbers('player', {
-				frames: [/* 14,15,*/ 16, 17, 18, 19, 20, 21],
-			}),
-			frameRate: 8,
-			repeat: 0,
-		}
-		const slice = {
-			key: 'SLICE',
-			frames: this.scene.anims.generateFrameNumbers('player', {
-				frames: [24, 25, 26, 27, 28],
-			}),
-			frameRate: 8,
-			repeat: -1,
-		}
-		const fall = {
-			key: 'FALL',
-			frames: this.scene.anims.generateFrameNumbers('player', {
-				frames: [22, 23],
-			}),
-			frameRate: 8,
-			repeat: -1,
-		}
-		const hang = {
-			key: 'HANG',
-			frames: this.scene.anims.generateFrameNumbers('player', {
-				frames: [29, 30, 31, 32],
-			}),
-			frameRate: 8,
-			repeat: -1,
-		}
-		const hang_release = {
-			key: 'HANG_RELEASE',
-			frames: this.scene.anims.generateFrameNumbers('player', {
-				frames: [33, 34, 35, 36, 37],
-			}),
-			frameRate: 8,
-			repeat: -1,
-		}
-		const weapon_stand = {
-			key: 'WEAPON_STAND',
-			frames: this.scene.anims.generateFrameNumbers('player', {
-				frames: [38, 39, 40, 41],
-			}),
-			frameRate: 8,
-			repeat: -1,
-		}
-		const cutUp = {
-			key: 'cutUp',
-			frames: this.scene.anims.generateFrameNumbers('player', {
-				frames: [42, 43, 44, 45, 46, 47],
-			}),
-			frameRate: 12,
-			repeat: 0,
-		}
-		const cutDown = {
-			key: 'cutDown',
-			frames: this.scene.anims.generateFrameNumbers('player', {
-				frames: [49, 50, 51],
-			}),
-			frameRate: 12,
-			repeat: 0,
-		}
-		const swift = {
-			key: 'swift',
-			frames: this.scene.anims.generateFrameNumbers('player', {
-				frames: [52, 53, 54, 55, 56, 57, 58],
-			}),
-			frameRate: 12,
-			repeat: 0,
-		}
-		const hurt = {
-			key: 'HURT',
-			frames: this.scene.anims.generateFrameNumbers('player', {
-				frames: [59, 60, 61],
-			}),
-			frameRate: 8,
-			repeat: -1,
-		}
-		const faint = {
-			key: 'FAINT',
-			frames: this.scene.anims.generateFrameNumbers('player', {
-				frames: [62, 63, 64, 65, 66, 67, 68],
-			}),
-			frameRate: 8,
-			repeat: -1,
-		}
-		const weapon_draw = {
-			key: 'WEAPON_DRAW',
-			frames: this.scene.anims.generateFrameNumbers('player', {
-				frames: [69, 70, 71, 72],
-			}),
-			frameRate: 8,
-			repeat: 0,
-		}
-		const weapon_shealth = {
-			key: 'WEAPON_SHEALTH',
-			frames: this.scene.anims.generateFrameNumbers('player', {
-				frames: [73, 74, 75, 76],
-			}),
-			frameRate: 8,
-			repeat: -1,
-		}
-		const jump = {
-			key: 'JUMP',
-			frames: this.scene.anims.generateFrameNumbers('player', {
-				frames: [77, 78],
-			}),
-			frameRate: 8,
-			repeat: -1,
-		}
-		const dive = {
-			key: 'DIVE',
-			frames: this.scene.anims.generateFrameNumbers('player', {
-				frames: [79, 80],
-			}),
-			frameRate: 8,
-			repeat: -1,
-		}
-		const swim_up = {
-			key: 'SWIM_UP',
-			frames: this.scene.anims.generateFrameNumbers('player', {
-				frames: [81, 82, 83, 84, 85, 86],
-			}),
-			frameRate: 8,
-			repeat: -1,
-		}
-		const swim = {
-			key: 'SWIM',
-			frames: this.scene.anims.generateFrameNumbers('player', {
-				frames: [87, 88, 89, 90],
-			}),
-			frameRate: 8,
-			repeat: -1,
-		}
-		const climb = {
-			key: 'CLIMB',
-			frames: this.scene.anims.generateFrameNumbers('player', {
-				frames: [91, 92, 93, 94],
-			}),
-			frameRate: 8,
-			repeat: -1,
-		}
-
-		this.scene.anims.create(stand)
-		this.scene.anims.create(on_knees)
-		this.scene.anims.create(run)
-		this.scene.anims.create(jumproll)
-		this.scene.anims.create(fall)
-		this.scene.anims.create(slice)
-		this.scene.anims.create(hang)
-		this.scene.anims.create(hang_release)
-		this.scene.anims.create(weapon_stand)
-		this.scene.anims.create(cutUp)
-		this.scene.anims.create(cutDown)
-		this.scene.anims.create(swift)
-		this.scene.anims.create(hurt)
-		this.scene.anims.create(faint)
-		this.scene.anims.create(weapon_draw)
-		this.scene.anims.create(weapon_shealth)
-		this.scene.anims.create(jump)
-		this.scene.anims.create(dive)
-		this.scene.anims.create(swim_up)
-		this.scene.anims.create(swim)
-		this.scene.anims.create(climb)
+		this.scene.anims.create(this.states.stand.animation)
+		this.scene.anims.create(this.states.on_knees.animation)
+		this.scene.anims.create(this.states.run.animation)
+		this.scene.anims.create(this.states.jumproll.animation)
+		this.scene.anims.create(this.states.fall.animation)
+		this.scene.anims.create(this.states.slice.animation)
+		this.scene.anims.create(this.states.hang.animation)
+		this.scene.anims.create(this.states.hang_release.animation)
+		this.scene.anims.create(this.states.weapon_stand.animation)
+		this.scene.anims.create(this.states.cutUp.animation)
+		this.scene.anims.create(this.states.cutDown.animation)
+		this.scene.anims.create(this.states.swift.animation)
+		this.scene.anims.create(this.states.hurt.animation)
+		this.scene.anims.create(this.states.faint.animation)
+		this.scene.anims.create(this.states.weapon_draw.animation)
+		this.scene.anims.create(this.states.weapon_shealth.animation)
+		this.scene.anims.create(this.states.jump.animation)
+		this.scene.anims.create(this.states.dive.animation)
+		this.scene.anims.create(this.states.swim_up.animation)
+		this.scene.anims.create(this.states.swim.animation)
+		this.scene.anims.create(this.states.climb.animation)
 		this.scene.anims.create({
 			key: 'whiteFrame',
 			frames: this.scene.anims.generateFrameNumbers('player', {
